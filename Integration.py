@@ -64,4 +64,27 @@ def overview_student():
 botton_overview = tk.Button(root, text='Overview', command=overview_student)
 botton_overview.pack(pady=25)
 
+
+def delete_student():
+    student_id = entry_id.get()
+
+    # 查詢該筆資料
+    cursor.execute('SELECT * FROM DB_student WHERE db_student_id = ?', (student_id,))
+    delete = cursor.fetchall()
+
+    # 刪除該筆資料
+    cursor.execute('DELETE FROM DB_student WHERE db_student_id = ?', (student_id,))
+    conn.commit()
+
+    if delete:
+        print('Following row is deleted:', delete)
+    else:
+        print(f'⚠️ No record found with Student ID: {student_id}')
+    print('-' * 30)
+
+
+button_delete = tk.Button(root, text='Delete', command=delete_student)
+button_delete.pack(pady=25)
+
+
 root.mainloop() #must be put to the end of programming code
